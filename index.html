@@ -3,32 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MediaDL Pro - Premium Video & Music Downloader</title>
+  <title>VortexHub - Premium Media Downloader</title>
   <meta name="description" content="Download video dan musik dari TikTok, Instagram, YouTube, dan 50+ platform lainnya dengan kualitas terbaik. Cepat, Aman, Gratis!">
-  <meta name="keywords" content="downloader, video, musik, tiktok, instagram, youtube, downloader gratis">
+  <meta name="keywords" content="downloader, video, musik, tiktok, instagram, youtube, downloader gratis, vortexhub">
   <link rel="icon" href="https://res.cloudinary.com/dsx9alwop/image/upload/v1777290949/aog1k4zchcl0onzlynvx.jpg" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- Preloader -->
   <div class="preloader">
-    <div class="loader"></div>
-    <p>MediaDL Pro</p>
+    <div class="vortex-loader"></div>
+    <p>VortexHub</p>
   </div>
 
   <!-- Background Elements -->
   <div class="background-container">
-    <div class="stars"></div>
-    <div class="gradient-bg"></div>
-    <div class="floating-shapes">
-      <div class="shape shape-1"></div>
-      <div class="shape shape-2"></div>
-      <div class="shape shape-3"></div>
-      <div class="shape shape-4"></div>
-    </div>
     <div class="animated-grid"></div>
+    <div class="vortex-background"></div>
+    <div class="floating-orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="orb orb-4"></div>
+    </div>
   </div>
 
   <!-- Navigation Bar -->
@@ -36,9 +35,9 @@
     <div class="nav-container">
       <div class="nav-logo">
         <div class="logo-icon">
-          <i class="fas fa-cloud-download-alt"></i>
+          <i class="fas fa-vortex"></i>
         </div>
-        <span class="logo-text">MediaDL<span class="logo-pro">Pro</span></span>
+        <span class="logo-text">Vortex<span class="logo-hub">Hub</span></span>
       </div>
       <div class="nav-menu" id="navMenu">
         <a href="#home" class="nav-link active" data-section="home">Home</a>
@@ -63,20 +62,20 @@
       <div class="hero-content">
         <div class="hero-text" data-aos="fade-up">
           <h1 class="hero-title">
-            <span class="gradient-text">Download Media</span>
+            <span class="gradient-text">Enter the Vortex</span>
             <br>
-            <span class="gradient-text-2">Dari Mana Saja</span>
+            <span class="gradient-text-2">Download Everything</span>
           </h1>
-          <p class="hero-subtitle">Aplikasi downloader terpercaya untuk video, musik, dan konten dari 50+ platform media sosial. <span class="highlight-text">Cepat • Aman • Gratis</span></p>
+          <p class="hero-subtitle">Platform downloader revolusioner untuk video, musik, dan konten dari 50+ platform media sosial. <span class="highlight-text">⚡ Lightning Fast • 🔒 Secure • 🎁 Absolutely Free</span></p>
           
           <div class="cta-buttons">
             <button class="btn btn-primary btn-glow" onclick="document.querySelector('.download-section').scrollIntoView({behavior: 'smooth'})">
-              <i class="fas fa-play"></i> 
-              <span>Mulai Download</span>
+              <i class="fas fa-bolt"></i> 
+              <span>Inject & Download</span>
             </button>
             <button class="btn btn-secondary">
-              <i class="fas fa-star"></i> 
-              <span>Fitur Premium</span>
+              <i class="fas fa-crown"></i> 
+              <span>Premium Access</span>
             </button>
           </div>
 
@@ -105,23 +104,23 @@
             <div class="phone-notch"></div>
             <div class="phone-screen">
               <div class="screen-content">
-                <i class="fas fa-cloud-download-alt"></i>
-                <p>Download<br>dengan Mudah</p>
+                <i class="fas fa-swirl"></i>
+                <p>Vortex<br>Power</p>
               </div>
             </div>
             <div class="phone-button"></div>
           </div>
           <div class="floating-card card-1">
-            <i class="fas fa-video"></i>
-            <p>HD Quality</p>
+            <i class="fas fa-bolt"></i>
+            <p>Ultra Fast</p>
           </div>
           <div class="floating-card card-2">
-            <i class="fas fa-bolt"></i>
-            <p>Super Fast</p>
+            <i class="fas fa-lock"></i>
+            <p>Encrypted</p>
           </div>
           <div class="floating-card card-3">
-            <i class="fas fa-shield-alt"></i>
-            <p>Secure</p>
+            <i class="fas fa-infinity"></i>
+            <p>Unlimited</p>
           </div>
         </div>
       </div>
@@ -132,8 +131,8 @@
   <section class="download-section" id="download">
     <div class="container">
       <div class="section-header">
-        <h2>Download Sekarang</h2>
-        <p>Masukkan URL video atau musik yang ingin Anda download</p>
+        <h2>Enter the Vortex</h2>
+        <p>Paste media URL dan biarkan Vortex bekerja untuk Anda</p>
       </div>
 
       <div class="download-card">
@@ -153,14 +152,14 @@
           </div>
           
           <button class="download-btn" onclick="fetchMedia()">
-            <i class="fas fa-search"></i>
-            <span>Cari & Download</span>
+            <i class="fas fa-bolt"></i>
+            <span>Inject & Download</span>
           </button>
         </div>
 
         <div class="loading-spinner" id="loadingSpinner">
-          <div class="spinner-circle"></div>
-          <p>Sedang memproses...</p>
+          <div class="spinner-vortex"></div>
+          <p>Entering Vortex...</p>
           <div class="progress-bar">
             <div class="progress-fill"></div>
           </div>
@@ -195,7 +194,7 @@
     <div class="container">
       <div class="result-card">
         <div class="result-header">
-          <h3><i class="fas fa-play-circle"></i> Pratinjau Media</h3>
+          <h3><i class="fas fa-play-circle"></i> Media Preview</h3>
           <button class="btn-close" onclick="hideResult()">
             <i class="fas fa-times"></i>
           </button>
@@ -204,7 +203,7 @@
         <div class="media-container">
           <div class="media-preview" id="media-preview">
             <div class="preview-placeholder">
-              <i class="fas fa-file-video"></i>
+              <i class="fas fa-film"></i>
               <p>Media akan ditampilkan di sini</p>
             </div>
           </div>
@@ -232,7 +231,7 @@
             </div>
             <div class="option-info">
               <h4>Download Video</h4>
-              <p>Kualitas Terbaik</p>
+              <p>Best Quality</p>
             </div>
             <i class="fas fa-arrow-right"></i>
           </button>
@@ -243,14 +242,14 @@
             </div>
             <div class="option-info">
               <h4>Download Audio</h4>
-              <p>Format MP3</p>
+              <p>MP3 Format</p>
             </div>
             <i class="fas fa-arrow-right"></i>
           </button>
         </div>
 
         <button class="btn btn-secondary" onclick="hideResult()">
-          <i class="fas fa-arrow-left"></i> Download Lagi
+          <i class="fas fa-arrow-left"></i> Back to Download
         </button>
       </div>
     </div>
@@ -260,8 +259,8 @@
   <section class="features-section" id="features">
     <div class="container">
       <div class="section-header">
-        <h2>Fitur Unggulan</h2>
-        <p>Semua yang Anda butuhkan untuk download media dengan mudah</p>
+        <h2>Vortex Features</h2>
+        <p>Teknologi terdepan untuk pengalaman download terbaik</p>
       </div>
 
       <div class="features-grid">
@@ -270,10 +269,9 @@
             <i class="fas fa-shield-alt"></i>
             <div class="icon-bg"></div>
           </div>
-          <h3>100% Aman</h3>
-          <p>Tanpa malware, virus, atau iklan yang mengganggu. Privasi Anda terlindungi.</p>
+          <h3>Military Grade Security</h3>
+          <p>Enkripsi end-to-end. Data Anda aman dari ancaman cyber.</p>
           <div class="feature-badge">Verified</div>
-          <div class="feature-icon-decoration"></div>
         </div>
 
         <div class="feature-card">
@@ -281,10 +279,9 @@
             <i class="fas fa-bolt"></i>
             <div class="icon-bg"></div>
           </div>
-          <h3>Sangat Cepat</h3>
+          <h3>Lightning Speed</h3>
           <p>Download instan tanpa kompresi. Kecepatan hingga 100MB/s.</p>
           <div class="feature-badge">Lightning Fast</div>
-          <div class="feature-icon-decoration"></div>
         </div>
 
         <div class="feature-card">
@@ -292,21 +289,19 @@
             <i class="fas fa-globe"></i>
             <div class="icon-bg"></div>
           </div>
-          <h3>50+ Platform</h3>
-          <p>Mendukung TikTok, Instagram, YouTube, Spotify, dan banyak lagi.</p>
+          <h3>50+ Platforms</h3>
+          <p>TikTok, Instagram, YouTube, Spotify, dan banyak lagi.</p>
           <div class="feature-badge">Multi Platform</div>
-          <div class="feature-icon-decoration"></div>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon feature-icon-4">
-            <i class="fas fa-video"></i>
+            <i class="fas fa-hd"></i>
             <div class="icon-bg"></div>
           </div>
-          <h3>HD Quality</h3>
-          <p>Download dalam kualitas HD/4K. Pilih resolusi yang Anda inginkan.</p>
+          <h3>4K Quality</h3>
+          <p>Download dalam kualitas 4K/8K. Pilih resolusi yang Anda inginkan.</p>
           <div class="feature-badge">Ultra HD</div>
-          <div class="feature-icon-decoration"></div>
         </div>
 
         <div class="feature-card">
@@ -314,10 +309,9 @@
             <i class="fas fa-headphones"></i>
             <div class="icon-bg"></div>
           </div>
-          <h3>Audio Extract</h3>
-          <p>Ekstrak audio dari video. Konversi ke MP3, WAV, atau format lain.</p>
+          <h3>Audio Extraction</h3>
+          <p>Extract audio dari video. Konversi ke MP3, WAV, FLAC, dan lebih.</p>
           <div class="feature-badge">Professional</div>
-          <div class="feature-icon-decoration"></div>
         </div>
 
         <div class="feature-card">
@@ -325,10 +319,9 @@
             <i class="fas fa-mobile-alt"></i>
             <div class="icon-bg"></div>
           </div>
-          <h3>Mobile Friendly</h3>
-          <p>Bekerja sempurna di semua perangkat. Desktop, tablet, atau smartphone.</p>
+          <h3>All Devices</h3>
+          <p>Desktop, tablet, smartphone. Responsive design di semua perangkat.</p>
           <div class="feature-badge">Responsive</div>
-          <div class="feature-icon-decoration"></div>
         </div>
       </div>
     </div>
@@ -338,7 +331,7 @@
   <section class="platforms-section" id="platforms">
     <div class="container">
       <div class="section-header">
-        <h2>Platform yang Didukung</h2>
+        <h2>Supported Platforms</h2>
         <p>Kompatibel dengan ratusan platform media sosial dan streaming</p>
       </div>
 
@@ -399,18 +392,18 @@
   <section class="faq-section" id="faq">
     <div class="container">
       <div class="section-header">
-        <h2>Pertanyaan Umum</h2>
+        <h2>Frequently Asked Questions</h2>
         <p>Jawaban untuk pertanyaan yang sering diajukan</p>
       </div>
 
       <div class="faq-grid">
         <div class="faq-item">
           <div class="faq-question" onclick="toggleFAQ(this)">
-            <h4>Apakah layanan ini gratis?</h4>
+            <h4>Apakah VortexHub benar-benar gratis?</h4>
             <i class="fas fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
-            <p>Ya, layanan kami 100% gratis. Tidak ada biaya tersembunyi, langganan, atau batasan download yang diperlukan. Semua fitur dapat diakses oleh semua pengguna.</p>
+            <p>Ya, VortexHub 100% gratis selamanya. Tidak ada biaya tersembunyi, langganan, atau batasan download yang diperlukan. Semua fitur dapat diakses oleh semua pengguna.</p>
           </div>
         </div>
 
@@ -420,7 +413,7 @@
             <i class="fas fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
-            <p>Waktu download tergantung ukuran file dan kecepatan internet Anda. Rata-rata 30-60 detik untuk file 100MB. Kami menggunakan server yang cepat untuk memastikan download optimal.</p>
+            <p>Waktu download tergantung ukuran file dan kecepatan internet Anda. Rata-rata 30-60 detik untuk file 100MB. VortexHub menggunakan server tercanggih untuk download optimal.</p>
           </div>
         </div>
 
@@ -430,7 +423,7 @@
             <i class="fas fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
-            <p>Privasi Anda adalah prioritas kami. Kami tidak menyimpan data pribadi, URL yang Anda input, atau riwayat download. Koneksi Anda dilindungi dengan enkripsi SSL.</p>
+            <p>Privasi Anda adalah prioritas utama kami. Kami tidak menyimpan data pribadi, URL yang Anda input, atau riwayat download. Koneksi Anda dilindungi dengan enkripsi SSL 256-bit.</p>
           </div>
         </div>
 
@@ -440,27 +433,27 @@
             <i class="fas fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
-            <p>Kami mendukung MP4, WebM untuk video, dan MP3, WAV untuk audio. Format dapat bervariasi tergantung platform sumber. Kami selalu menyediakan opsi format terbaik.</p>
+            <p>Kami mendukung MP4, WebM, MKV untuk video, dan MP3, WAV, FLAC untuk audio. Format dapat bervariasi tergantung platform sumber. Kami selalu menyediakan opsi format terbaik.</p>
           </div>
         </div>
 
         <div class="faq-item">
           <div class="faq-question" onclick="toggleFAQ(this)">
-            <h4>Apakah legal untuk download konten?</h4>
+            <h4>Apakah legal menggunakan VortexHub?</h4>
             <i class="fas fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
-            <p>Kami hanya menyediakan alat download. Pengguna bertanggung jawab atas penggunaan konten yang sesuai dengan hukum dan kebijakan platform. Untuk konten pribadi, pastikan memiliki izin.</p>
+            <p>Kami hanya menyediakan tools download. Pengguna bertanggung jawab atas penggunaan konten sesuai hukum dan kebijakan platform. Download konten pribadi Anda sendiri atau konten dengan izin creator.</p>
           </div>
         </div>
 
         <div class="faq-item">
           <div class="faq-question" onclick="toggleFAQ(this)">
-            <h4>Bagaimana jika ada masalah?</h4>
+            <h4>Ada masalah? Bagaimana caranya?</h4>
             <i class="fas fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
-            <p>Tim support kami siap membantu 24/7. Hubungi kami melalui social media atau email. Kami biasanya merespons dalam waktu kurang dari 1 jam. Kepuasan Anda adalah prioritas kami!</p>
+            <p>Tim support VortexHub siap membantu 24/7. Hubungi kami melalui social media atau email. Kami biasanya merespons dalam waktu kurang dari 1 jam. Kepuasan Anda adalah misi kami!</p>
           </div>
         </div>
       </div>
@@ -473,17 +466,17 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-section">
-          <h4><i class="fas fa-cloud-download-alt"></i> MediaDL Pro</h4>
-          <p>Download media dari ratusan platform dengan mudah, cepat, dan aman. Aplikasi terpercaya untuk semua kebutuhan download Anda.</p>
+          <h4><i class="fas fa-swirl"></i> VortexHub</h4>
+          <p>Platform downloader revolusioner untuk media dari ratusan platform. Cepat, aman, dan gratis selamanya.</p>
           <div class="footer-badge">
             <span>🔒 Secure</span>
-            <span>⚡ Fast</span>
-            <span>✨ Premium</span>
+            <span>⚡ Lightning Fast</span>
+            <span>✨ Advanced</span>
           </div>
         </div>
 
         <div class="footer-section">
-          <h4>Link Cepat</h4>
+          <h4>Quick Links</h4>
           <ul>
             <li><a href="#home">Home</a></li>
             <li><a href="#features">Features</a></li>
@@ -493,7 +486,7 @@
         </div>
 
         <div class="footer-section">
-          <h4>Kebijakan</h4>
+          <h4>Policies</h4>
           <ul>
             <li><a href="#">Privacy Policy</a></li>
             <li><a href="#">Terms of Service</a></li>
@@ -503,7 +496,7 @@
         </div>
 
         <div class="footer-section">
-          <h4>Ikuti Kami</h4>
+          <h4>Follow Us</h4>
           <div class="social-links">
             <a href="https://tiktok.com/@ben.mister.ben" target="_blank" title="TikTok" class="social-link social-tiktok">
               <i class="fab fa-tiktok"></i>
@@ -523,7 +516,7 @@
 
       <div class="footer-bottom">
         <p>Made with <i class="fas fa-heart"></i> by <a href="https://tiktok.com/@ben.mister.ben" target="_blank">@RizkyMaxz</a></p>
-        <p>© 2026 MediaDL Pro. All rights reserved.</p>
+        <p>© 2026 VortexHub. All rights reserved. | Powered by Advanced AI</p>
       </div>
     </div>
   </footer>
