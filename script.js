@@ -1,5 +1,5 @@
 // ============================================
-// PREMIUM DOWNLOADER - ADVANCED JAVASCRIPT
+// VORTEXHUB - ADVANCED JAVASCRIPT ENGINE
 // ============================================
 
 // ============ THEME TOGGLE ============
@@ -67,12 +67,14 @@ const hamburger = document.getElementById('hamburger');
 const navMenu = document.getElementById('navMenu');
 
 hamburger.addEventListener('click', () => {
-  navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+  hamburger.classList.toggle('active');
+  navMenu.classList.toggle('active');
 });
 
 navLinks.forEach(link => {
   link.addEventListener('click', () => {
-    navMenu.style.display = 'none';
+    hamburger.classList.remove('active');
+    navMenu.classList.remove('active');
   });
 });
 
@@ -116,7 +118,7 @@ async function fetchMedia() {
   const url = document.getElementById('url').value.trim();
   
   if (!url) {
-    showToast('Masukkan URL terlebih dahulu!', 'error');
+    showToast('Paste URL terlebih dahulu!', 'error');
     return;
   }
 
@@ -141,12 +143,12 @@ async function fetchMedia() {
     hideLoading();
 
     if (!data.status) {
-      showToast('API mengembalikan status gagal. Silakan coba lagi.', 'error');
+      showToast('API Error. Silakan coba lagi.', 'error');
       return;
     }
 
     if (!data.result || !data.result.medias || data.result.medias.length === 0) {
-      showToast('Gagal mengambil media. Pastikan URL benar.', 'error');
+      showToast('Media tidak ditemukan. Check URL Anda.', 'error');
       return;
     }
 
@@ -176,7 +178,7 @@ async function fetchMedia() {
     }
 
     if (!videoMedia && !musicMedia) {
-      showToast('Media tidak ditemukan. Platform mungkin tidak didukung.', 'error');
+      showToast('Media tidak ditemukan.', 'error');
       return;
     }
 
@@ -184,16 +186,16 @@ async function fetchMedia() {
     document.getElementById('caption').textContent = caption.substring(0, 100) + (caption.length > 100 ? '...' : '');
 
     showResult();
-    showToast('Media berhasil dimuat!', 'success');
+    showToast('✨ Media dimuat berhasil!', 'success');
 
   } catch (error) {
     hideLoading();
-    console.error('Error:', error);
+    console.error('VortexHub Error:', error);
     
     if (error.name === 'AbortError') {
-      showToast('Request timeout. Silakan coba lagi.', 'error');
+      showToast('Timeout. Coba lagi.', 'error');
     } else {
-      showToast('Terjadi kesalahan. Pastikan URL benar.', 'error');
+      showToast('Error. Check URL Anda.', 'error');
     }
   }
 }
@@ -222,13 +224,13 @@ function autoDownload(type) {
   }
 
   if (!downloadLink) {
-    showToast('Link download tidak tersedia.', 'error');
+    showToast('Link tidak tersedia.', 'error');
     return;
   }
 
   const downloadBtn = document.getElementById(`download-${type}-btn`);
   const originalHTML = downloadBtn.innerHTML;
-  downloadBtn.innerHTML = '<div class="option-icon"><i class="fas fa-spinner fa-spin"></i></div><div class="option-info"><h4>Downloading...</h4><p>Jangan tutup halaman ini</p></div><i class="fas fa-arrow-right"></i>';
+  downloadBtn.innerHTML = '<div class="option-icon"><i class="fas fa-spinner fa-spin"></i></div><div class="option-info"><h4>Downloading...</h4><p>Jangan tutup halaman</p></div><i class="fas fa-arrow-right"></i>';
   downloadBtn.disabled = true;
 
   fetch(downloadLink, {
@@ -243,7 +245,7 @@ function autoDownload(type) {
     })
     .then(blob => {
       if (blob.size === 0) {
-        throw new Error("File yang diunduh kosong");
+        throw new Error("File kosong");
       }
 
       const a = document.createElement('a');
@@ -258,14 +260,14 @@ function autoDownload(type) {
       downloadBtn.innerHTML = originalHTML;
       downloadBtn.disabled = false;
 
-      showToast('Download berhasil!', 'success');
+      showToast('⚡ Download berhasil!', 'success');
       hideResult();
     })
     .catch(err => {
-      console.error('Download failed:', err);
+      console.error('VortexHub Download Error:', err);
       downloadBtn.innerHTML = originalHTML;
       downloadBtn.disabled = false;
-      showToast('Terjadi kesalahan saat download.', 'error');
+      showToast('Download error.', 'error');
     });
 }
 
@@ -274,14 +276,14 @@ function generateFileName(type) {
   const timestamp = new Date().getTime();
   const randomSuffix = Math.random().toString(36).substr(2, 5);
   const extension = type === 'video' ? 'mp4' : 'mp3';
-  return `MediaDL_${timestamp}_${randomSuffix}.${extension}`;
+  return `VortexHub_${timestamp}_${randomSuffix}.${extension}`;
 }
 
 // ============ CLEAR PREVIEW ============
 function clearPreview() {
   document.getElementById('media-preview').innerHTML = `
     <div class="preview-placeholder">
-      <i class="fas fa-file-video"></i>
+      <i class="fas fa-film"></i>
       <p>Media akan ditampilkan di sini</p>
     </div>
   `;
@@ -316,10 +318,10 @@ function showToast(message, type = 'success') {
   
   // Change color based on type
   if (type === 'error') {
-    toast.style.background = '#ef4444';
+    toast.style.background = 'linear-gradient(135deg, #ff4757, #ff006e)';
     toast.innerHTML = '<i class="fas fa-exclamation-circle"></i><span>' + message + '</span>';
   } else {
-    toast.style.background = '#10b981';
+    toast.style.background = 'linear-gradient(135deg, #06ffa5, #00d4ff)';
     toast.innerHTML = '<i class="fas fa-check-circle"></i><span>' + message + '</span>';
   }
 
@@ -400,7 +402,10 @@ document.addEventListener('DOMContentLoaded', function() {
   document.body.style.animation = 'fadeInUp 0.6s ease';
   
   // Log initialization
-  console.log('%cMediaDL Pro Initialized', 'color: #6366f1; font-size: 16px; font-weight: bold;');
+  console.log('%c╔═══════════════════════════════╗', 'color: #00d4ff; font-size: 12px;');
+  console.log('%c║  🌀 VORTEXHUB INITIALIZED  🌀  ║', 'color: #00d4ff; font-size: 12px; font-weight: bold;');
+  console.log('%c╚═══════════════════════════════╝', 'color: #00d4ff; font-size: 12px;');
+  console.log('%cWelcome to VortexHub - Premium Media Downloader', 'color: #8338ec; font-size: 14px; font-weight: bold;');
 });
 
 // ============ PREVENT DOUBLE CLICK ON BUTTONS ============
@@ -413,9 +418,9 @@ document.querySelectorAll('button').forEach(btn => {
 // ============ PAGE VISIBILITY ============
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
-    console.log('Page hidden');
+    console.log('%cVortexHub: Page hidden', 'color: #00d4ff;');
   } else {
-    console.log('Page visible');
+    console.log('%cVortexHub: Page visible', 'color: #06ffa5;');
   }
 });
 
@@ -426,4 +431,17 @@ window.addEventListener('beforeunload', (e) => {
     e.preventDefault();
     e.returnValue = '';
   }
+});
+
+// ============ VORTEX EFFECTS ============
+// Parallax effect on mouse move
+document.addEventListener('mousemove', (e) => {
+  const orbs = document.querySelectorAll('.orb');
+  const mouseX = e.clientX / window.innerWidth;
+  const mouseY = e.clientY / window.innerHeight;
+  
+  orbs.forEach((orb, index) => {
+    const offset = (index + 1) * 20;
+    orb.style.transform = `translate(${mouseX * offset}px, ${mouseY * offset}px)`;
+  });
 });
