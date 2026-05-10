@@ -56,6 +56,16 @@
     </div>
   </nav>
 
+  <!-- Theme Selector -->
+  <div class="theme-selector" id="themeSelector">
+    <button class="theme-btn theme-ocean" onclick="changeTheme('ocean')" title="Ocean Blue Theme"></button>
+    <button class="theme-btn theme-purple" onclick="changeTheme('purple')" title="Purple Theme"></button>
+    <button class="theme-btn theme-green" onclick="changeTheme('green')" title="Green Neon Theme"></button>
+    <button class="theme-btn theme-sunset" onclick="changeTheme('sunset')" title="Sunset Orange Theme"></button>
+    <button class="theme-btn theme-heat" onclick="changeTheme('heat')" title="Red Heat Theme"></button>
+    <button class="theme-btn" style="background: linear-gradient(135deg, #00d9ff, #ff00ff); cursor: pointer; margin-top: 5px;" onclick="changeTheme('default')" title="Default Cyan/Magenta Theme"></button>
+  </div>
+
   <!-- Hero Section -->
   <section class="hero" id="home">
     <div class="container">
@@ -66,7 +76,7 @@
             <br>
             <span class="gradient-text-2">Download Everything</span>
           </h1>
-          <p class="hero-subtitle">Platform downloader revolusioner untuk video, musik, dan konten dari 50+ platform media sosial. <span class="highlight-text">⚡ Lightning Fast • 🔒 Secure • 🎁 Absolutely Free</span></p>
+          <p class="hero-subtitle">Platform downloader revolusioner untuk video, musik, dan konten dari 50+ platform media sosial. <span class="highlight-text">⚡ Lightning Fast • 🔒 Secure • ✨ Advanced</span></p>
           
           <div class="cta-buttons">
             <button class="btn btn-primary btn-glow" onclick="document.querySelector('.download-section').scrollIntoView({behavior: 'smooth'})">
@@ -80,19 +90,19 @@
           </div>
 
           <div class="hero-stats">
-            <div class="stat stat-1">
+            <div class="stat">
               <h3 class="stat-number">10M+</h3>
               <p>Downloads</p>
             </div>
-            <div class="stat stat-2">
+            <div class="stat">
               <h3 class="stat-number">50+</h3>
               <p>Platforms</p>
             </div>
-            <div class="stat stat-3">
+            <div class="stat">
               <h3 class="stat-number">99.9%</h3>
               <p>Success Rate</p>
             </div>
-            <div class="stat stat-4">
+            <div class="stat">
               <h3 class="stat-number">24/7</h3>
               <p>Support</p>
             </div>
@@ -443,7 +453,7 @@
             <i class="fas fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
-            <p>Kami hanya menyediakan tools download. Pengguna bertanggung jawab atas penggunaan konten sesuai hukum dan kebijakan platform. Download konten pribadi Anda sendiri atau konten dengan izin creator.</p>
+            <p>Kami hanya menyediakan tools download. Pengguna bertanggung jawab atas penggunaan konten sesuai hukum dan kebijakan platform. Download konten pribadi Anda sendiri atau konten dengan izin pemilik.</p>
           </div>
         </div>
 
@@ -528,5 +538,41 @@
   </div>
 
   <script src="script.js"></script>
+  <script>
+    // Theme System
+    function changeTheme(themeName) {
+      document.body.classList.remove('theme-ocean', 'theme-purple', 'theme-green', 'theme-sunset', 'theme-heat');
+      if (themeName !== 'default') {
+        document.body.classList.add('theme-' + themeName);
+        localStorage.setItem('selectedTheme', themeName);
+      } else {
+        localStorage.setItem('selectedTheme', 'default');
+      }
+    }
+
+    // Load saved theme on page load
+    window.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('selectedTheme') || 'default';
+      if (savedTheme !== 'default') {
+        changeTheme(savedTheme);
+      }
+    });
+
+    // Dark Mode Toggle
+    document.getElementById('themeToggle')?.addEventListener('click', function() {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      localStorage.setItem('darkMode', isDark);
+      this.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    });
+
+    // Load saved dark mode preference
+    window.addEventListener('DOMContentLoaded', function() {
+      if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+      }
+    });
+  </script>
 </body>
 </html>
