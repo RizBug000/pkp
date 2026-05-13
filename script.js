@@ -113,6 +113,50 @@ function hideLoading() {
   spinner.style.display = 'none';
 }
 
+// ============ CORS PROXY URLS ============
+const CORS_PROXIES = [
+  'https://api.allorigins.win/get?url=',
+  'https://cors-anywhere.herokuapp.com/',
+  'https://proxy.cors.sh/'
+];
+
+// Helper function to bypass CORS
+async function fetchWithCORSProxy(url, proxyIndex = 0) {
+  if (proxyIndex >= CORS_PROXIES.length) {
+    throw new Error('All CORS proxies failed');
+  }
+
+  try {
+    // Try direct fetch first
+    const response = await fetch(url, {
+      headers: {
+        'Accept': '*/*'
+      },
+      mode: 'cors',
+      credentials: 'omit'
+    });
+    return response;
+  } catch (error) {
+    // If direct fetch fails, try CORS proxy
+    if (proxyIndex < CORS_PROXIES.length) {
+      try {
+        const proxyUrl = CORS_PROXIES[proxyIndex] + encodeURIComponent(url);
+        const response = await fetch(proxyUrl, {
+          headers: {
+            'Accept': '*/*',
+            'Origin': window.location.origin
+          },
+          mode: 'cors'
+        });
+        return response;
+      } catch (proxyError) {
+        return fetchWithCORSProxy(url, proxyIndex + 1);
+      }
+    }
+    throw error;
+  }
+}
+
 // ============ FETCH MEDIA ============
 async function fetchMedia() {
   const url = document.getElementById('url').value.trim();
@@ -129,13 +173,23 @@ async function fetchMedia() {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 20000);
 
+    // Main API call with better CORS handling
     const response = await fetch(`https://api.theresav.biz.id/download/aio?url=${encodeURIComponent(url)}&apikey=P4QlB`, {
-      signal: controller.signal
+      signal: controller.signal,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      mode: 'cors',
+      credentials: 'omit'
     });
 
     clearTimeout(timeoutId);
 
     if (!response.ok) {
+      if (response.status === 0 || response.type === 'opaque') {
+        throw new Error('CORS Error - Server tidak mengizinkan akses');
+      }
       throw new Error(`HTTP Error: ${response.status}`);
     }
 
@@ -161,18 +215,21 @@ async function fetchMedia() {
 
     const videoMedia = medias.find(media => media.type === 'video');
     if (videoMedia && videoMedia.url) {
-      mediaPreview.innerHTML += `<video controls width="100%" style="border-radius: 8px;"><source src="${videoMedia.url}" type="video/mp4"></video>`;
+      // Use CORS-enabled video source
+      const videoUrl = videoMedia.url;
+      mediaPreview.innerHTML += `<video controls width="100%" crossorigin="anonymous" style="border-radius: 8px;"><source src="${videoUrl}" type="video/mp4">Browser Anda tidak mendukung video tag</video>`;
       document.getElementById('download-video-btn').disabled = false;
-      window.videoDownloadLink = videoMedia.url;
+      window.videoDownloadLink = videoUrl;
     } else {
       document.getElementById('download-video-btn').disabled = true;
     }
 
     const musicMedia = medias.find(media => media.type === 'audio');
     if (musicMedia && musicMedia.url) {
-      mediaPreview.innerHTML += `<audio controls width="100%" style="width: 100%; margin-top: 1rem;"><source src="${musicMedia.url}" type="audio/mpeg"></audio>`;
+      const audioUrl = musicMedia.url;
+      mediaPreview.innerHTML += `<audio controls width="100%" crossorigin="anonymous" style="width: 100%; margin-top: 1rem;"><source src="${audioUrl}" type="audio/mpeg">Browser Anda tidak mendukung audio tag</audio>`;
       document.getElementById('download-music-btn').disabled = false;
-      window.musicDownloadLink = musicMedia.url;
+      window.musicDownloadLink = audioUrl;
     } else {
       document.getElementById('download-music-btn').disabled = true;
     }
@@ -194,8 +251,12 @@ async function fetchMedia() {
     
     if (error.name === 'AbortError') {
       showToast('Timeout. Coba lagi.', 'error');
+    } else if (error.message.includes('CORS')) {
+      showToast('CORS Error - Coba lagi dengan URL berbeda.', 'error');
+    } else if (error.message.includes('Failed to fetch')) {
+      showToast('Network Error - Periksa koneksi internet Anda.', 'error');
     } else {
-      showToast('Error. Check URL Anda.', 'error');
+      showToast('Error: ' + error.message, 'error');
     }
   }
 }
@@ -213,7 +274,7 @@ function hideResult() {
   document.getElementById('clearBtn').style.display = 'none';
 }
 
-// ============ AUTO DOWNLOAD ============
+// ============ ADVANCED AUTO DOWNLOAD WITH CORS HANDLING ============
 function autoDownload(type) {
   let downloadLink;
 
@@ -233,42 +294,111 @@ function autoDownload(type) {
   downloadBtn.innerHTML = '<div class="option-icon"><i class="fas fa-spinner fa-spin"></i></div><div class="option-info"><h4>Downloading...</h4><p>Jangan tutup halaman</p></div><i class="fas fa-arrow-right"></i>';
   downloadBtn.disabled = true;
 
-  fetch(downloadLink, {
-    mode: 'cors',
-    credentials: 'omit'
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP Error: ${response.status}`);
-      }
-      return response.blob();
-    })
-    .then(blob => {
-      if (blob.size === 0) {
-        throw new Error("File kosong");
-      }
+  // Multiple download strategies
+  downloadWithRetry(downloadLink, type, downloadBtn, originalHTML, 0);
+}
 
-      const a = document.createElement('a');
-      const url = URL.createObjectURL(blob);
-      a.href = url;
-      a.download = generateFileName(type);
-      document.body.appendChild(a);
-      a.click();
+async function downloadWithRetry(url, type, downloadBtn, originalHTML, attempt = 0) {
+  const maxAttempts = 3;
+
+  try {
+    // Strategy 1: Direct fetch with CORS
+    const response = await fetch(url, {
+      mode: 'cors',
+      credentials: 'omit',
+      headers: {
+        'Accept': '*/*',
+        'Origin': window.location.origin
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const blob = await response.blob();
+    
+    if (blob.size === 0) {
+      throw new Error("File kosong - Download gagal");
+    }
+
+    // Successfully downloaded, create download link
+    downloadFile(blob, type, downloadBtn, originalHTML);
+
+  } catch (err) {
+    console.error(`Download attempt ${attempt + 1} failed:`, err);
+
+    if (attempt < maxAttempts - 1) {
+      // Retry with slight delay
+      showToast(`Retry download... (Attempt ${attempt + 2}/${maxAttempts})`, 'error');
+      setTimeout(() => {
+        downloadWithRetry(url, type, downloadBtn, originalHTML, attempt + 1);
+      }, 1000);
+    } else {
+      // All attempts failed, try alternative method
+      console.log('Trying alternative download method...');
+      downloadFileWithElement(url, type, downloadBtn, originalHTML);
+    }
+  }
+}
+
+function downloadFile(blob, type, downloadBtn, originalHTML) {
+  try {
+    const a = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    a.href = url;
+    a.download = generateFileName(type);
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    
+    // Trigger download
+    a.click();
+    
+    // Cleanup
+    setTimeout(() => {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-
       downloadBtn.innerHTML = originalHTML;
       downloadBtn.disabled = false;
-
       showToast('⚡ Download berhasil!', 'success');
       hideResult();
-    })
-    .catch(err => {
-      console.error('VortexHub Download Error:', err);
+    }, 100);
+
+  } catch (err) {
+    console.error('Download file error:', err);
+    downloadBtn.innerHTML = originalHTML;
+    downloadBtn.disabled = false;
+    showToast('Download error: ' + err.message, 'error');
+  }
+}
+
+// Alternative download using anchor tag directly
+function downloadFileWithElement(url, type, downloadBtn, originalHTML) {
+  try {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = generateFileName(type);
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    
+    a.click();
+    
+    setTimeout(() => {
+      document.body.removeChild(a);
       downloadBtn.innerHTML = originalHTML;
       downloadBtn.disabled = false;
-      showToast('Download error.', 'error');
-    });
+      showToast('⚡ Download dimulai!', 'success');
+      hideResult();
+    }, 500);
+
+  } catch (err) {
+    console.error('Alternative download error:', err);
+    downloadBtn.innerHTML = originalHTML;
+    downloadBtn.disabled = false;
+    showToast('Download error: ' + err.message, 'error');
+  }
 }
 
 // ============ GENERATE FILE NAME ============
